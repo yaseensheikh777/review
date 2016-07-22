@@ -1,11 +1,14 @@
 <?php
 
-require "Acl.php";
+namespace app\middlewares;
+use app\middlewares\Acl;
+
 class Middleware {
 	private $acl;
-	public function middleware() {
+
+	function __construct() {
 		session_start();
-		$this->acl=new ACL();
+		$this->acl=new Acl();
 	}
 
 	public function validate() {

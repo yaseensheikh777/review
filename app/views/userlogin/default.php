@@ -1,8 +1,8 @@
-
+<script type="text/javascript" src="../../../review/assets/js/file.js"></script>
 
 
 <div class="register-user" >
-<div class="alert alert-danger" id="error-message-div" style="display:none">
+<div class="alert alert-danger" id="error-message-div">
     <a href="#" class="close" id="error-hide" data-dismiss="alert" aria-label="close" title="close">×</a><span id="error-message"></span>
 </div>
 <h2 class="register-h2">Login</h2>

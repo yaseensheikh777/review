@@ -1,4 +1,6 @@
-
+<?php 
+  use app\Routes;
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>

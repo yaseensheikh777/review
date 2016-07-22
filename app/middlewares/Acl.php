@@ -1,7 +1,9 @@
 <?php
 
+namespace app\middlewares;
+
 class Acl {
-	public function ACL() {
+	function __construct() {
 
 	}
 

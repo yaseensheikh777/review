@@ -1,12 +1,9 @@
 <?php 
-
-
+require "AutoLoader.php";
+use app\Routes;
+use app\database\Database;
 require "config".DS."config.php";
-require "database".DS."Database.php";
-require "Routes.php";
-
-
-$db = Routes::getInstance('Database');
+$db = Database::getInstance();
 $routes = Routes::getInstance('Routes');
 
-require "config".DS."definedRoutes.php";
+require "config".DS."routes.php";

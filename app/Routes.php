@@ -34,10 +34,10 @@ class Routes{
 			$url = $_GET['url'];
 			
 			//trim the url to remove slashes on right
-			$url = rtrim($url,'/');
+			//$url = rtrim($url,'/');
 			//break the url to fragments
-			$url = explode('/',$url);
-			$match.=$url[0];
+			//$url = explode('/',$url);
+			$match.=$url;
 		}
 		//require "middlewares".DS."Middleware.php";
 		$middleware=new Middleware();

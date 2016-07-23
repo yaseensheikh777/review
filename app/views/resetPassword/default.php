@@ -1,4 +1,4 @@
-<script type="text/javascript" src="../../../mvcp/assets/js/forgot.js"></script>
+<script type="text/javascript" src="<?php echo HTTP_SERVER; ?>/assets/js/forgot.js"></script>
 <div class="forgot-container">
 <div class="alert alert-danger" id="error-message-div">
     <a href="#" class="close" id="error-hide" data-dismiss="alert" aria-label="close" title="close">×</a><span id="error-message"></span>

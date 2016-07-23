@@ -1,16 +1,19 @@
 <?php
-/*
-** KITE - A NANO PHP MVC FRAMEWORK
-** Author - Krishna Teja G S
-** website - packetcode.com
-*/
-
-//package - lib/basket.php
-
-// A class which holds the data to the view
+namespace app;
 
 class Basket{
 
+	private static $instance;
+
+	public static function getInstance() {
+		if(self::$db)
+			return self::$db;
+		else
+		{
+			self::$db = new Basket();
+			return self::$db;
+		}	
+	}
 
 	function set($key,$value)
 	{

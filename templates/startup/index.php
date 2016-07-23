@@ -14,16 +14,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
-    <link type="text/css" href="../../../review/assets/css/style.css" rel="stylesheet">
+    <link type="text/css" href="<?php echo HTTP_SERVER; ?>/assets/css/style.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/starter-template/starter-template.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="../../assets/js/html5shiv.js"></script>
-      <script src="../../assets/js/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -40,10 +35,24 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="http://localhost/review">Home</a></li>
-            <li><a href="login">Login</a></li>
-            <li><a href="contact">Contact</a></li>
+            <li class="active"><a href="<?php echo HTTP_SERVER; ?>">Home</a></li>
+            <?php if (!isset($_SESSION['email'])) { ?>
+              <li><a href="<?php echo HTTP_SERVER; ?>/login">Login</a></li>
+              <?php } ?>
+            <li><a href="<?php echo HTTP_SERVER; ?>/contact">Contact</a></li>
           </ul>
+          <?php if(isset($_SESSION['email'])) { ?>
+            <nav>
+              <ul class="cf">
+                  <li><a class="dropdown" href="#">   Muhammad Ali   </a>
+                      <ul>
+                          <li><a href="#">Setting</a></li>
+                          <li><a href="#">Logout</a></li>
+                      </ul>
+                      </li>
+              </ul>
+          </nav>
+          <?php } ?>
         </div><!--/.nav-collapse -->
       </div>
     </div>

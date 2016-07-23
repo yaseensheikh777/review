@@ -7,7 +7,6 @@ class Middleware {
 	private $acl;
 
 	function __construct() {
-		session_start();
 		$this->acl=new Acl();
 	}
 

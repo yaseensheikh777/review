@@ -2,7 +2,6 @@
 
 namespace app\middlewares;
 use app\middlewares\Acl;
-
 class Middleware {
 	private $acl;
 

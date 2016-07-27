@@ -3,6 +3,7 @@ namespace app;
 use app\middlewares\Middleware;
 use app\Routes;
 
+
 class Routes{
 	private static $instance = array();
 	private $_uri=array();
@@ -30,16 +31,39 @@ class Routes{
 		// check if the url parameter is set
 		if(isset($_GET['url']))
 		{
+			$url_arr=explode('/',$_GET['url']);
 			// load the url into url variable
 			$url = $_GET['url'];
-			
-			//trim the url to remove slashes on right
-			//$url = rtrim($url,'/');
-			//break the url to fragments
-			//$url = explode('/',$url);
 			$match.=$url;
 		}
-		//require "middlewares".DS."Middleware.php";
+		if(sizeof($url_arr)&&$url_arr[0]=='api') {
+			$beta=strtolower($_SERVER['REQUEST_METHOD'])."Action";
+			foreach ($this->_uri as $key => $value) {
+				if($key==$match) {
+					$alpha=$value;
+					$isFound=true;
+					break;
+				}	
+			}
+			if($isFound) {
+				$apiMiddleware="app\\middlewares\\ApiMiddleware";
+				$apiMiddleware=new $apiMiddleware();
+				if($apiMiddleware->validate($alpha)) {
+					$cl="app\\api\\v1\\controllers\\".$alpha;
+					$app = new $cl();
+					$app->$beta();
+				}
+				else {
+					die;
+				}
+				
+			}
+			else {
+				echo "error";die;
+			}
+			die;
+		}
+		
 		$middleware=new Middleware();
 
 		if($middleware->validate()) {

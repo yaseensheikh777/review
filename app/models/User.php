@@ -6,7 +6,4 @@ class User{
 	$email;
 	$password;
 	$roleId;
-
 }
-
-?>

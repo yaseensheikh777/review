@@ -8,3 +8,4 @@ $routes->add('/admin/dashboard','UserController@adminDashboard');
 
 $routes->add('/api/authorize','AuthController');
 $routes->add('/api/order','OrderController');
+$routes->add('/api/review','ReviewController');

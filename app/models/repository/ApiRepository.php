@@ -16,4 +16,18 @@ class ApiRepository {
 			return false;
 		}
 	}
+
+	function getUserIdByToken($access_token) {
+		global $db;
+		$query="SELECT user_id FROM oauth_access_tokens WHERE access_token=:access_token";
+		$db->query($query);
+		$db->bind(':access_token',$access_token);
+		$result=$db->single();
+		if(sizeof($result)) {
+			return $result['user_id'];
+		}
+		else {
+			return false;
+		}
+	}
 }

@@ -1,8 +1,10 @@
 <?php
 namespace app\models;
 class Order{
-	$id;
-	$userId;
-	$creationTime;
-	$status;
+	public $id;
+	public $userId;
+	public $creationTime;
+	public $status;
+	public $reviewPage;
+	public $reviewPageStatus;
 }

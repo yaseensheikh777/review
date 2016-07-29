@@ -6,6 +6,7 @@
 */
 
 //package - index.php
+
 define('DS',DIRECTORY_SEPARATOR);
 require "app".DS."preLoaders.php";
 

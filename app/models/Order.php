@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 class Order{
+	public $uoId;
 	public $id;
 	public $userId;
 	public $creationTime;

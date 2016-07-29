@@ -63,7 +63,7 @@ class OrderRepository {
 
 	function createOrder($order) {
 		global $db;
-		$query="INSERT INTO `Order` VALUES(:id,:userId,:creationTime,:status,:reviewPage,:reviewPageStatus)";
+		$query="INSERT INTO `Order` VALUES(NULL,:id,:userId,:creationTime,:status,:reviewPage,:reviewPageStatus)";
 		$db->query($query);
 		$db->bind(':id',$order->id);
 		$db->bind(':userId',$order->userId);
@@ -71,6 +71,38 @@ class OrderRepository {
 		$db->bind(':status',$order->status);
 		$db->bind(':reviewPage',$order->reviewPage);
 		$db->bind(':reviewPageStatus',$order->reviewPageStatus);
+		$db->execute();
+	}
+
+	function getOrderByReviewPage($reviewPage) {
+		global $db;
+		$query="SELECT * FROM `Order` WHERE reviewPage=:reviewPage";
+		$db->query($query);
+		$db->bind(':reviewPage',$reviewPage);
+		$result=$db->single();
+		if($result) {
+			$orderCl="app\\models\\Order";
+			$order=new $orderCl();
+			$order->uoId=$result['uoId'];
+			$order->id=$result['id'];
+			$order->userId=$result['userId'];
+			$order->creationTime=$result['creationTime'];
+			$order->status=$result['status'];
+			$order->reviewPage=$result['reviewPage'];
+			$order->reviewPageStatus=$result['reviewPageStatus'];
+			return $order;
+		}
+		else {
+			return false;
+		}	
+	}
+
+	function updateReviewPageStatus($status,$orderId) {
+		global $db;
+		$query="UPDATE `Order` SET reviewPageStatus=:status WHERE uoId=:uoId";
+		$db->query($query);
+		$db->bind(':status',$status);
+		$db->bind(':uoId',$orderId);
 		$db->execute();
 	}
 }

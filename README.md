@@ -89,3 +89,28 @@
 ```
 
 > **Note:** $result contains the result in json format.
+
+**Review API**
+	You can use review API by using following example codes
+
+**GET Review API:**
+
+```
+    $ch = curl_init(); 
+    curl_setopt($ch, CURLOPT_URL, "http://www.domain.com/api/review");
+
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer Yourtoken'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close ($ch); 
+```
+
+> **Note:** $result contains the result in json format like this
+>[{"id":"3","rating":"4","title":"hello this is a review","comment":"hello this is a review hello this is a review hello this is a review","orderId":"8"},{"id":"4","rating":"3","title":"hello this is a review","comment":"hello this is a review hello this is a review hello this is a review","orderId":"9"},{"id":"9","rating":"5","title":"asdasd","comment":"adssadsadsad","orderId":"6"},{"id":"10","rating":"3","title":"sdsaddsa","comment":"dsasadsadsad","orderId":"12"}]
+> You can also do following
+> - You can pass order id to get specific order's review like curl_setopt($ch, CURLOPT_URL, "http://www.domain.com/api/order?id=1");
+> - You can also pass limit to get records for pagination like curl_setopt($ch, CURLOPT_URL, "http://www.domain.com/api/order?startIdx=0&endIdx=5");

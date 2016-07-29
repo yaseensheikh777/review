@@ -7,11 +7,13 @@ class ReviewController {
 	}
 	
 	function getAction() {
+		$apiModel = "app\\models\\repository\\ApiRepository";
+		$apiModel=new $apiModel();
 		$model = "app\\models\\repository\\ReviewRepository";
 		$model=new $model();
-		if(isset($_GET['id'])) {
-			$id=$_GET['id'];
-			if(!$data=$model->getReviewById($id)) {
+		if(isset($_GET['orderId'])) {
+			$id=$_GET['orderId'];
+			if(!$data=$model->getReviewByOrderId($id,$userId)) {
 				$data=array('data' => 'No record found');
 			}
 		}

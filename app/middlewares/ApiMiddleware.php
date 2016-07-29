@@ -14,7 +14,7 @@ class ApiMiddleware {
 		$temp = fopen($tempName, 'w');
 		$imageSize = stream_copy_to_stream($file, $temp);
 		fclose($temp);
-		$imageDimensions = getimagesize($tempName);
+		//$imageDimensions = getimagesize($tempName);
 		define('tmp',$tempName);
 	} 
 	public function validate($alpha) {

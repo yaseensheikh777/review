@@ -2,19 +2,19 @@
 
 namespace app\models\repository;
 class OrderRepository {
-	function getOrders($startIdx=0,$limit=0) {
+	function getOrders($userId,$startIdx=0,$limit=0) {
 		global $db;
 		if(($startIdx==0&&$limit==0)) {
-			$query="SELECT * FROM `Order` WHERE status=".ORDER_STATUS_ACTIVE;	
+			$query="SELECT * FROM `Order` WHERE userId=:userId AND status=".ORDER_STATUS_ACTIVE;	
 			$db->query($query);
 		}
 		else {
-			$query="SELECT * FROM `Order` WHERE status=".ORDER_STATUS_ACTIVE." LIMIT :start,:limits";
+			$query="SELECT * FROM `Order` WHERE userId=:userId AND status=".ORDER_STATUS_ACTIVE." LIMIT :start,:limits";
 			$db->query($query);
 			$db->bind(':start',$startIdx);
 			$db->bind(':limits',$limit);
-			
 		}
+		$db->bind(':userId',$userId);
 		$result=$db->resultset();
 		$orderArr=array();
 		$orderCl="app\\models\\Order";
@@ -29,11 +29,12 @@ class OrderRepository {
 		return $orderArr;
 	}
 
-	function getOrderById($id) {
+	function getOrderById($id,$userId) {
 		global $db;
-		$query="SELECT * FROM `Order` WHERE id=:id AND status=".ORDER_STATUS_ACTIVE;
+		$query="SELECT * FROM `Order` WHERE id=:id AND userId=:userId AND status=".ORDER_STATUS_ACTIVE;
 		$db->query($query);
 		$db->bind(':id',$id);
+		$db->bind(':userId',$userId);
 		$result=$db->single();
 		if($result) {
 			$orderCl="app\\models\\Order";
@@ -50,12 +51,13 @@ class OrderRepository {
 		
 	}
 
-	function deleteOrderById($id) {
+	function deleteOrderById($id,$userId) {
 		global $db;
 		//$query="DELETE FROM `Order` WHERE id=:id";
-		$query="UPDATE `Order` SET status=".ORDER_STATUS_DEACTIVE." WHERE id=:id";
+		$query="UPDATE `Order` SET status=".ORDER_STATUS_DEACTIVE." WHERE id=:id AND userId=:userId";
 		$db->query($query);
 		$db->bind(':id',$id);
+		$db->bind(':userId',$userId);
 		$db->execute();
 	}
 

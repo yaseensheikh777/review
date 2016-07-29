@@ -7,7 +7,13 @@ class OrderController {
 	}
 
 	function postAction() {
-		$access_token=$_POST['access_token'];
+		foreach (getallheaders() as $name => $value) {
+		    if($name=='Authorization') {
+		    	$auth=$value;
+		    }
+		}
+		$auth=explode(' ',$auth);
+		$access_token=trim($auth[1]);
 		$orderCl="app\\models\\Order";
 		$order=new $orderCl();
 		$order->id=(int) $_POST['id'];
@@ -25,10 +31,20 @@ class OrderController {
 	}
 
 	function getAction() {
+		foreach (getallheaders() as $name => $value) {
+		    if($name=='Authorization') {
+		    	$auth=$value;
+		    }
+		}
+		$auth=explode(' ',$auth);
+		$access_token=trim($auth[1]);
+		$apiModel = "app\\models\\repository\\ApiRepository";
+		$apiModel=new $apiModel();
+		$userId=$apiModel->getUserIdByToken($access_token);
 		$model = "app\\models\\repository\\OrderRepository";
 		$model=new $model();
 		if(isset($_GET['id'])) {
-			if(!$data=$model->getOrderById($_GET['id']))
+			if(!$data=$model->getOrderById($_GET['id'],$userId))
 			{
 				$data=array('data' => 'No record found');
 			}
@@ -37,23 +53,36 @@ class OrderController {
 			if(isset($_GET['startIdx'])&&isset($_GET['endIdx'])) {
 				$startIdx=(int)$_GET['startIdx'];
 				$endIdx=(int)$_GET['endIdx'];
-				$data=$model->getOrders($startIdx,$endIdx);
+				$data=$model->getOrders($userId,$startIdx,$endIdx);
 			}
 		else
-			$data=$model->getOrders();	
+			$data=$model->getOrders($userId);	
 		}
 		echo json_encode($data);
 	}
 
 	function deleteAction() {
-		print_r($_GET);
-		print_r($_POST);
-		print_r($_SERVER);
+		if(isset($_GET['id'])) {
+			$id=(int)$_GET['id'];
+		}
+		else {
+			echo json_encode(array('status' => 'No id provided'));
+			die;
+		}
+		foreach (getallheaders() as $name => $value) {
+		    if($name=='Authorization') {
+		    	$auth=$value;
+		    }
+		}
+		$auth=explode(' ',$auth);
+		$access_token=trim($auth[1]);
+		$apiModel = "app\\models\\repository\\ApiRepository";
+		$apiModel=new $apiModel();
+		$userId=$apiModel->getUserIdByToken($access_token);
 		$model = "app\\models\\repository\\OrderRepository";
 		$model=new $model();
-		$id=(int)$_GET['id'];
-		if($model->getOrderById($id)) {
-			$model->deleteOrderById($id);
+		if($model->getOrderById($id,$userId)) {
+			$model->deleteOrderById($id,$userId);
 			echo json_encode(array('status' => 'Order is deleted'));
 		}
 		else {
